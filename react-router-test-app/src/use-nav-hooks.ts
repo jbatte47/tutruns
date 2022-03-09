@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import {
   NavigateFunction,
   Params,
@@ -14,6 +15,7 @@ export interface INavHooks {
   params: Readonly<Params<string>>,
   location: Location,
   searchParams: URLSearchParams,
+  getSearchParamsObject: () => Record<string, string>,
   setSearchParams: (
     nextInit: URLSearchParamsInit,
     navigateOptions?: {
@@ -35,27 +37,31 @@ export const useNavHooks = () => {
   const params = useParams();
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
-  const updateSearchParams = (
+  const getSearchParamsObject = useCallback(() => {
+    return Array.from(searchParams.entries())
+      .map(([key, value]) => ({ [key]: value }))
+      .reduce((curr, next) => ({ ...curr, ...next }), {});
+  }, [searchParams]);
+  const updateSearchParams = useCallback((
     nextInit: Record<string, string>,
     navigateOptions?: {
       replace?: boolean | undefined;
       state?: any;
     } | undefined
   ) => {
-    const currentParams = Array.from(searchParams.entries())
-      .map(([key, value]) => ({ [key]: value }))
-      .reduce((curr, next) => ({ ...curr, ...next }), {});
+    const currentParams = getSearchParamsObject();
     const newParams = {
       ...currentParams,
       ...nextInit,
     };
     setSearchParams(newParams, navigateOptions);
-  };
+  }, [getSearchParamsObject, setSearchParams]);
   return {
     navigate,
     params,
     location,
     searchParams,
+    getSearchParamsObject,
     setSearchParams,
     updateSearchParams,
   } as INavHooks;

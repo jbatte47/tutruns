@@ -7,8 +7,10 @@ import { RouterExperiments } from './router-experiments';
 export const SecretRouterExperiments: FC<INavHooks> = hooks => {
   const {
     params: { someInternalId },
+    getSearchParamsObject,
     updateSearchParams,
   } = hooks;
+  const { programmaticArg } = getSearchParamsObject();
   return (
     <RouterExperiments { ...hooks }>
       <p>
@@ -24,6 +26,11 @@ export const SecretRouterExperiments: FC<INavHooks> = hooks => {
           </input>
         </InputGroup>
       </p>
+      { programmaticArg && (
+        <p>
+          I descructured a search param: "programmaticArg" is set to <strong>{ programmaticArg }</strong>!
+        </p>
+      ) }
     </RouterExperiments>
   );
 };
