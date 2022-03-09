@@ -55,11 +55,7 @@ export const RouterExperiments: FC<INavHooks> = ({
 
 const WithHooks = () => {
   const navHooks = useNavHooks();
-  return (
-    <div>
-      { <RouterExperiments {...navHooks} /> }
-    </div>
-  );
+  return <RouterExperiments {...navHooks} />;
 };
 
 export default WithHooks;

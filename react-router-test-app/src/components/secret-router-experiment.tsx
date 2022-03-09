@@ -30,11 +30,7 @@ export const SecretRouterExperiments: FC<INavHooks> = hooks => {
 
 const WithHooks = () => {
   const navHooks = useNavHooks();
-  return (
-    <div>
-      <SecretRouterExperiments { ...navHooks } />
-    </div>
-  );
+  return <SecretRouterExperiments { ...navHooks } />;
 };
 
 export default WithHooks;
