@@ -38,11 +38,7 @@ export const NotFound: FC<INavHooks> = ({
 
 const WithHooks = () => {
   const navHooks = useNavHooks();
-  return (
-    <div>
-      { <NotFound {...navHooks} /> }
-    </div>
-  );
+  return <NotFound {...navHooks} />;
 };
 
 export default WithHooks;
